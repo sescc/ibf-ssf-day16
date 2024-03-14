@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
@@ -23,6 +21,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 
 @RestController
+//localhost:8080/api/time
 @RequestMapping(path="/api/time", produces=MediaType.APPLICATION_JSON_VALUE)      // or ="application/json"
 public class TimeRestController {
 
@@ -58,6 +57,7 @@ public class TimeRestController {
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("WSC", new Date().toString());
+        headers.add("POSTTIMEJSON", "Testing only");      // Status OK 202
 
         // alternative method to return response object
         return new ResponseEntity<>(responsePayload.toString(), headers, HttpStatus.OK);

@@ -30,7 +30,7 @@ public class Day16Application implements CommandLineRunner {
 		JsonObjectBuilder empBuilder = Json.createObjectBuilder();
 		empBuilder.add("firstName", "Aces")
 				.add("lastName", "Zynder")
-				.add("age", 25)
+				//.add("age", 25)
 				.add("salary", 25000);
 
 		JsonObjectBuilder addressBuilder = Json.createObjectBuilder();
@@ -55,12 +55,13 @@ public class Day16Application implements CommandLineRunner {
 		empBuilder.add("phoneNumber", phoneBuilder);
 
 		JsonObject employee = empBuilder.build();		// *use the JsonObject under jakarta.json, not google
+		System.out.println("Employee JsonObject: " + employee);
 
 		// Getting data from JSON
 		Employee emp = new Employee();
 		emp.setFirstName(employee.get("firstName").toString());
 		emp.setLastName(employee.getString("lastName"));
-		emp.setSalary(Long.parseLong(employee.getString("salary").toString()));
+		emp.setSalary(Long.parseLong(employee.get("salary").toString()));
 
 		// In order to get Address, need JSON object
 		JsonObject addressObj = employee.getJsonObject("address");
@@ -71,7 +72,7 @@ public class Day16Application implements CommandLineRunner {
 		emp.setAddress(myAddress);
 
 		// Use JSON object to read back phone number iteratively
-		JsonArray phoneJsonArray = employee.getJsonArray("phoneBuilder");
+		JsonArray phoneJsonArray = employee.getJsonArray("phoneNumber");
 		List<Phone> phoneList = new ArrayList<>();
 
 		for (int i = 0; i < phoneJsonArray.size(); i++) {
@@ -81,7 +82,7 @@ public class Day16Application implements CommandLineRunner {
 		}
 		emp.setPhoneNumbers(phoneList);
 
-		System.out.println("Employee Entity: " + employee);
+		System.out.println("Employee Entity: " + emp.toString());
 	}
 
 }
